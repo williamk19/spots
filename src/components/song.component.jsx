@@ -1,17 +1,13 @@
 import React from 'react';
 import Data from '../data/data';
 import './song.component.css';
+import SongContainer from './song-container/song-container.component';
 
 const songComponent = () => {
   return (
     <div className='container'>
       <h1 className='header'>Track Info</h1>
-      <div className='song-container'>
-        <img src={`${Data.album.images[0].url}`} alt='Album Images' />
-        <h2>{`${Data.name}`}</h2>
-        <p>{`${Data.artists[0].name} - ${Data.album.name}`}</p>
-        <button>Select</button>
-      </div>
+      <SongContainer Data={Data}/>
     </div>
   );
 }

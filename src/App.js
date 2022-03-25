@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import SongComponent from './pages/song.component';
+import SongComponent from './components/song.component';
 import './App.css';
 
 function App() {
