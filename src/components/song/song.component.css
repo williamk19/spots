@@ -1,0 +1,41 @@
+.song-container {
+  border: 3px solid #000;
+  width: 40%;
+  padding: 20px;
+  margin: auto;
+  background-color: rgb(240, 255, 250);
+  margin-top: 3rem;
+}
+
+.song-container h2 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.song-container p {
+  margin-bottom: 1rem;
+}
+
+.song-container > img {
+  height: 180px;
+}
+
+.song-container > button {
+  background-color: cadetblue;
+  color: aliceblue;
+  cursor: pointer;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 4px 4px 18px 0px rgba(0, 0, 0, 0.26);
+}
+
+@media (max-width: 768px) {
+  .song-container {
+    width: 90%;
+  }
+
+  .song-container > img {
+    height: 100px;
+  }
+}

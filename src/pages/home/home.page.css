@@ -1,0 +1,11 @@
+.container {
+  background: linear-gradient( 109.6deg,  rgba(45,116,213,1) 11.2%, rgba(121,137,212,1) 91.2% );
+  padding-bottom: 3rem;
+}
+
+.header {
+  padding-top: 3rem;
+  font-size: 3rem;
+  color: rgb(240, 255, 250);
+  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+}
