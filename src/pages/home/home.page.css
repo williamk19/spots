@@ -8,4 +8,29 @@
   font-size: 3rem;
   color: rgb(240, 255, 250);
   text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+  margin-bottom: 1rem;
+}
+
+.links {
+  color: rgb(240, 255, 250);
+  font-size: 2rem;
+  text-decoration: none;
+  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.links:active {
+  font-size: 2rem;
+  color: rgb(240, 255, 250);
+  text-decoration: none;
+  text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+}
+
+.input-search {
+  padding: 1rem 1.5rem;
+}
+
+.btn-search {
+  padding: 1rem 1.5rem;
 }
