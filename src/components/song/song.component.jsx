@@ -1,13 +1,17 @@
 import React from 'react';
 import './song.component.css';
 
-const songContainer = ({data}) => {
+const songContainer = ({ data, selected, onSelected, onDeselect }) => {
   return (
     <div className='song-container'>
       <img src={`${data.album.images[0].url}`} alt='Album Images' />
       <h2>{`${data.name}`}</h2>
       <p>{`${data.artists[0].name} - ${data.album.name}`}</p>
-      <button>Select</button>
+      {selected.some((select) => select.id === data.id) ? (
+        <button onClick={() => onDeselect(data)}>Deselect</button>
+      ) : (
+        <button onClick={() => onSelected(data)}>Select</button>
+      )}
     </div>
   );
 };
