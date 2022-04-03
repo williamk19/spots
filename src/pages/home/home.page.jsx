@@ -2,6 +2,7 @@ import React from 'react';
 // import data from '../../data/data';
 import './home.page.css';
 import SongComponent from '../../components/song/song.component';
+import PlaylistComponent from '../../components/playlist/playlist.component';
 
 const songComponent = ({
   authUrl,
@@ -12,7 +13,10 @@ const songComponent = ({
   query,
   selected,
   onSelected,
-  onDeselect
+	onDeselect,
+	minLength,
+	handleDesc,
+	handleCreatePlaylist
 }) => {
   const selectedItem = selected.filter(select => select.name === query);
 
@@ -28,6 +32,7 @@ const songComponent = ({
           Sign Out
         </a>
       )}
+			<PlaylistComponent minLength={minLength} handleDesc={handleDesc} handleCreatePlaylist={handleCreatePlaylist}/>
       <input className='input-search' onChange={onSearchChange} type='search' />
       <button className='btn-search' onClick={callApi}>
         SEARCH MUSIC
