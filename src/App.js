@@ -32,6 +32,7 @@ const App = () => {
 		if (!selected.find((select) => select.id === newData.id)) {
 			setSelected([...selected, newData]);
 		}
+		console.log(selected);
 	};
 
 	const onDeselect = (removeData) => {
@@ -62,15 +63,15 @@ const App = () => {
 	const handleDesc = (e) => {
 		const { value } = e.target;
 		setListDesc(value);
-	}
+	};
 
 	const handleCreatePlaylist = async (e) => {
 		e.preventDefault();
-		
+
 		if (listTitle.length <= 10) {
-			alert("Playlist name must be over 10 characters")
+			alert("Playlist name must be over 10 characters");
 		} else {
-			let data = await fetch(
+			let playlistId = await fetch(
 				`https://api.spotify.com/v1/users/04579w5ezcoyk8zvh4xl1hbwm/playlists`,
 				{
 					method: "POST",
@@ -84,28 +85,20 @@ const App = () => {
 						Authorization: `Bearer ${token}`,
 					},
 				}
-			).then(res => res.json()).then(data => data);
-			console.log(data);
-		}
-		fetch(
-			`https://api.spotify.com/v1/users/04579w5ezcoyk8zvh4xl1hbwm/playlists`,
-			{
-				method: "POST",
-				body: JSON.stringify({
-					name: `${listTitle}`,
-					description: `${listDesc}`,
-					public: false,
-				}),
+			).then(res => res.json()).then(data => data.id);
+			const uris = selected.map(select => select.uri).join(',');
+			fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${uris}`, {
 				headers: {
-					"Content-Type": "application/json",
+					Accept: "application/json",
 					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json"
 				},
-			}
-		).then(res => res.json()).then(data => data);
-		console.log(data);
-	}
-		
+				method: "POST"
+			});
+		}
+
 	};
+
 	return (
 		<div className="App">
 			<HomePage
