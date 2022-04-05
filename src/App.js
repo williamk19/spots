@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import HomePage from "./pages/home/home.page";
+import { connect } from 'react-redux';
+import { setToken } from './redux/action';
 import "./App.css";
+
 const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=55548742d4374324bce1397bcea3dafc&scope=playlist-modify-private&redirect_uri=http://localhost:3000/`;
 const searchUrl = `https://api.spotify.com/v1/search?type=album&include_external=audio`;
 
-const App = () => {
-	const [token, setToken] = useState("");
+const App = ({token, getToken}) => {
 	const [query, setQuery] = useState("");
 	const [data, setData] = useState({});
 	const [selected, setSelected] = useState([]);
-	// const [playlist, setPlaylist] = useState({
-	// 	temp: "",
-	// 	title: "",
-	// 	desc: "",
-	// });
-
 	const [listTitle, setListTitle] = useState('');
 	const [listDesc, setListDesc] = useState('');
 
@@ -25,7 +21,7 @@ const App = () => {
 			let temp = hk.split("=");
 			params[temp[0]] = temp[1];
 		});
-		setToken(params.access_token);
+		getToken(params.access_token);
 	});
 
 	const onSelected = (newData) => {
@@ -120,4 +116,13 @@ const App = () => {
 	);
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+	token: state.token
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+	getToken: (token) => dispatch(setToken(token))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
