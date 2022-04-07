@@ -4,31 +4,39 @@ import { connect } from 'react-redux';
 import { setToken } from './redux/action';
 import "./App.css";
 
-const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=55548742d4374324bce1397bcea3dafc&scope=playlist-modify-private&redirect_uri=http://localhost:3000/`;
+const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${process.env.REACT_APP_SPOTIFY_API_KEY}&scope=playlist-modify-private&redirect_uri=http://localhost:3000/`;
 const searchUrl = `https://api.spotify.com/v1/search?type=album&include_external=audio`;
 
 const App = ({token, getToken}) => {
 	const [query, setQuery] = useState("");
 	const [data, setData] = useState({});
 	const [selected, setSelected] = useState([]);
+	const [currUserId, setCurrUserId] = useState('')
 	const [listTitle, setListTitle] = useState('');
 	const [listDesc, setListDesc] = useState('');
 
 	useEffect(() => {
-		let hash = window.location.hash.substring(1);
-		let params = {};
-		hash.split("&").map((hk) => {
-			let temp = hk.split("=");
-			params[temp[0]] = temp[1];
-		});
-		getToken(params.access_token);
+		if (!token) {
+			let hash = window.location.hash.substring(1);
+			let params = {};
+			hash.split("&").map((hk) => {
+				let temp = hk.split("=");
+				return params[temp[0]] = temp[1];
+			});
+			fetch("https://api.spotify.com/v1/me", {
+				headers: {
+					Authorization: `Bearer ${params.access_token}`,
+					"Content-Type": "application/json"
+				}
+			}).then(res => res.json()).then(curr => setCurrUserId(curr.id));
+			getToken(params.access_token);
+		}
 	});
 
 	const onSelected = (newData) => {
 		if (!selected.find((select) => select.id === newData.id)) {
 			setSelected([...selected, newData]);
 		}
-		console.log(selected);
 	};
 
 	const onDeselect = (removeData) => {
@@ -63,12 +71,11 @@ const App = ({token, getToken}) => {
 
 	const handleCreatePlaylist = async (e) => {
 		e.preventDefault();
-
 		if (listTitle.length <= 10) {
 			alert("Playlist name must be over 10 characters");
 		} else {
 			let playlistId = await fetch(
-				`https://api.spotify.com/v1/users/04579w5ezcoyk8zvh4xl1hbwm/playlists`,
+				`https://api.spotify.com/v1/users/${currUserId}/playlists`,
 				{
 					method: "POST",
 					body: JSON.stringify({
@@ -92,13 +99,11 @@ const App = ({token, getToken}) => {
 				method: "POST"
 			});
 		}
-
 	};
 
 	return (
 		<div className="App">
 			<HomePage
-				token={token}
 				authUrl={authUrl}
 				searchUrl={searchUrl}
 				selected={selected}
