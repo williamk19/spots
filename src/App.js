@@ -3,8 +3,9 @@ import HomePage from "./pages/home/home.page";
 import { connect } from 'react-redux';
 import { setToken } from './redux/action';
 import "./App.css";
+const isPublish = true;
 
-const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${process.env.REACT_APP_SPOTIFY_API_KEY}&scope=playlist-modify-private&redirect_uri=http://localhost:3000/`;
+const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${process.env.REACT_APP_SPOTIFY_API_KEY}&scope=playlist-modify-private&redirect_uri=${isPublish ? "https://spots-xi.vercel.app/" : "http://localhost:3000/"}`;
 const searchUrl = `https://api.spotify.com/v1/search?type=album&include_external=audio`;
 
 const App = ({token, getToken}) => {
