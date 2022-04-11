@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import HomePage from "./pages/home/home.page";
 import { connect } from 'react-redux';
 import { setToken } from './redux/action';
+import PropTypes from "prop-types";
 import "./App.css";
 const isPublish = true;
 
@@ -36,21 +37,21 @@ const App = ({token, getToken}) => {
 
 	const onSelected = (newData) => {
 		if (!selected.find((select) => select.id === newData.id)) {
-			setSelected([...selected, newData]);
+			return setSelected([...selected, newData]);
 		}
 	};
 
-	const onDeselect = (removeData) => {
-		setSelected(selected.filter((select) => select.id !== removeData.id));
-	};
+	const onDeselect = (removeData) => (
+		setSelected(selected.filter((select) => select.id !== removeData.id))
+	);
 
-	const onSearchChange = (e) => {
-		setQuery(e.target.value);
-	};
+	const onSearchChange = (e) => (
+		setQuery(e.target.value)
+	);
 
 	const callApi = (e) => {
 		e.preventDefault();
-		fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
+		return fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
@@ -62,12 +63,12 @@ const App = ({token, getToken}) => {
 
 	const minLength = (e) => {
 		const { value } = e.target;
-		setListTitle(value);
+		return setListTitle(value);
 	};
 
 	const handleDesc = (e) => {
 		const { value } = e.target;
-		setListDesc(value);
+		return setListDesc(value);
 	};
 
 	const handleCreatePlaylist = async (e) => {
@@ -91,7 +92,7 @@ const App = ({token, getToken}) => {
 				}
 			).then(res => res.json()).then(data => data.id);
 			const uris = selected.map(select => select.uri).join(',');
-			fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${uris}`, {
+			return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${uris}`, {
 				headers: {
 					Accept: "application/json",
 					Authorization: `Bearer ${token}`,
@@ -121,6 +122,11 @@ const App = ({token, getToken}) => {
 		</div>
 	);
 };
+
+App.propTypes = {
+	token: PropTypes.string,
+	getToken: PropTypes.func
+}
 
 const mapStateToProps = (state) => ({
 	token: state.token
