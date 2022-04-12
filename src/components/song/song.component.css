@@ -1,10 +1,19 @@
 .song-container {
   border: 3px solid #000;
-  width: 40%;
+  width: 70%;
   padding: 20px;
   margin: auto;
-  background-color: rgb(240, 255, 250);
+  background-color: #f0fffa;
   margin-top: 3rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
 }
 
 .song-container h2 {
@@ -17,10 +26,11 @@
 }
 
 .song-container > img {
-  height: 180px;
+  height: 150px;
+  margin-right: 2rem;
 }
 
-.song-container > button {
+.song-container  button {
   background-color: cadetblue;
   color: aliceblue;
   cursor: pointer;

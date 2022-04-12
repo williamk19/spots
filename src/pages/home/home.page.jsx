@@ -48,24 +48,26 @@ const songComponent = ({
                 <button className='btn-search' onClick={callApi}>
                   SEARCH MUSIC
                 </button>
-                {selectedItem.map((d) => (
-                  <SongComponent
-                    key={d.id}
-                    data={d}
-                    selected={selected}
-                    onSelected={onSelected}
-                    onDeselect={onDeselect}
-                  />
-                ))}
-                {data?.tracks?.items?.map((d) => (
-                  <SongComponent
-                    key={d.id}
-                    data={d}
-                    selected={selected}
-                    onSelected={onSelected}
-                    onDeselect={onDeselect}
-                  />
-                ))}
+                <div className='song-list'>
+                  {selectedItem.map((d) => (
+                    <SongComponent
+                      key={d.id}
+                      data={d}
+                      selected={selected}
+                      onSelected={onSelected}
+                      onDeselect={onDeselect}
+                    />
+                  ))}
+                  {data?.tracks?.items?.map((d) => (
+                    <SongComponent
+                      key={d.id}
+                      data={d}
+                      selected={selected}
+                      onSelected={onSelected}
+                      onDeselect={onDeselect}
+                    />
+                  ))}
+                </div>
               </>
             ) : (
               <Redirect to='/' />
