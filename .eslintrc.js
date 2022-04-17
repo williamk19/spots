@@ -2,7 +2,8 @@ module.exports = {
     "env": {
         "node": true,
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "jest": true
     },
     "extends": [
         "eslint:recommended",
@@ -10,7 +11,8 @@ module.exports = {
     ],
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "tsx": true
         },
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -19,5 +21,6 @@ module.exports = {
         "react"
     ],
     "rules": {
+        'no-undef': 'off',
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HomePage from "./pages/home/home.page";
+import HomePage from "./pages/home/home.page.tsx";
 import { connect } from 'react-redux';
 import { setToken } from './redux/action';
 import PropTypes from "prop-types";
@@ -48,18 +48,6 @@ const App = ({token, getToken}) => {
 	const onSearchChange = (e) => (
 		setQuery(e.target.value)
 	);
-
-	const callApi = (e) => {
-		e.preventDefault();
-		return fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((res) => res.json())
-			.then((data) => setData(data));
-	};
 
 	const minLength = (e) => {
 		const { value } = e.target;
@@ -110,11 +98,11 @@ const App = ({token, getToken}) => {
 				searchUrl={searchUrl}
 				selected={selected}
 				data={data}
+				setData={setData}
 				query={query}
 				onSearchChange={onSearchChange}
 				onSelected={onSelected}
 				onDeselect={onDeselect}
-				callApi={callApi}
 				minLength={minLength}
 				handleDesc={handleDesc}
 				handleCreatePlaylist={handleCreatePlaylist}

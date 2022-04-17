@@ -1,5 +1,4 @@
 import React from 'react';
-// import data from '../../data/data';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,12 +13,60 @@ import PlaylistComponent from '../../components/playlist/playlist.component';
 import { TextField, Button, Box, Grid } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-const songComponent = ({
+type SelectedType = {
+  id: number;
+  name: String;
+  album: {
+    images: {
+      url: String;
+    }[];
+    name: String;
+  };
+  artists: {
+    name: String;
+  }[];
+};
+
+type DataType = {
+  tracks: {
+    items: {
+      id: number;
+      album: {
+        images: {
+          url: string;
+        }[];
+        name: string;
+      };
+      name: string;
+      artists: {
+        name: string;
+      }[];
+    }[];
+  };
+};
+
+type Prop = {
+  token: string;
+  authUrl: string;
+  searchUrl: string;
+  selected: SelectedType[];
+  data: DataType;
+  setData: (data: DataType) => void;
+  query: string;
+  onSearchChange: () => void;
+  onSelected: () => void;
+  onDeselect: () => void;
+  minLength: () => void;
+  handleDesc: () => void;
+  handleCreatePlaylist: () => void;
+};
+
+const HomePage = ({
   token,
   authUrl,
   onSearchChange,
-  callApi,
   data,
+  setData,
   query,
   selected,
   onSelected,
@@ -27,8 +74,20 @@ const songComponent = ({
   minLength,
   handleDesc,
   handleCreatePlaylist,
-}) => {
-  const selectedItem = selected.filter((select) => select.name === query);
+}: Prop) => {
+  const callApi = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    return fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  };
+
+  const selectedItem = selected?.filter((select) => select.name === query);
 
   return (
     <div className='container'>
@@ -71,35 +130,38 @@ const songComponent = ({
                         Search
                       </Button>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                      <div className='song-list'>
-                        {selectedItem.map((d) => (
-                          <SongComponent
-                            key={d.id}
-                            data={d}
-                            selected={selected}
-                            onSelected={onSelected}
-                            onDeselect={onDeselect}
-                          />
+                    <Grid item xs={12} md={8}>
+                      <Grid
+                        container
+                        spacing={2}
+                        sx={{ justifyContent: 'center' }}
+                      >
+                        {selectedItem?.map((d) => (
+                          <Grid item key={d.id} xs={12} md={5}>
+                            <SongComponent
+                              key={d.id}
+                              data={d}
+                              selected={selected}
+                              onSelected={onSelected}
+                              onDeselect={onDeselect}
+                            />
+                          </Grid>
                         ))}
                         {data?.tracks?.items?.map((d) => (
-                          <SongComponent
-                            key={d.id}
-                            data={d}
-                            selected={selected}
-                            onSelected={onSelected}
-                            onDeselect={onDeselect}
-                          />
+                          <Grid item key={d.id} xs={12} md={5}>
+                            <SongComponent
+                              key={d.id}
+                              data={d}
+                              selected={selected}
+                              onSelected={onSelected}
+                              onDeselect={onDeselect}
+                            />
+                          </Grid>
                         ))}
-                      </div>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Box>
-
-                {/* <input className='input-search' type='search' /> */}
-                {/* <button className='btn-search' onClick={callApi}>
-                  SEARCH MUSIC
-                </button> */}
               </>
             ) : (
               <Redirect to='/' />
@@ -125,43 +187,7 @@ const songComponent = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   token: state.token,
 });
-
-export default connect(mapStateToProps)(songComponent);
-
-// import * as React from 'react';
-// import { styled } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-// import Paper from '@mui/material/Paper';
-// import Grid from '@mui/material/Grid';
-
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
-
-// export default function FullWidthGrid() {
-//   return (
-//     <Box sx={{ flexGrow: 1 }}>
-//       <Grid container spacing={2}>
-//         <Grid item xs={6} md={8}>
-//           <Item>xs=6 md=8</Item>
-//         </Grid>
-//         <Grid item xs={6} md={4}>
-//           <Item>xs=6 md=4</Item>
-//         </Grid>
-//         <Grid item xs={6} md={4}>
-//           <Item>xs=6 md=4</Item>
-//         </Grid>
-//         <Grid item xs={6} md={8}>
-//           <Item>xs=6 md=8</Item>
-//         </Grid>
-//       </Grid>
-//     </Box>
-//   );
-// }
+export default connect(mapStateToProps)(HomePage);
