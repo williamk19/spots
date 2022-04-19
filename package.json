@@ -51,6 +51,7 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "eslint": "^8.12.0",
-    "eslint-plugin-react": "^7.29.4"
+    "eslint-plugin-react": "^7.29.4",
+    "msw": "^0.39.2"
   }
 }

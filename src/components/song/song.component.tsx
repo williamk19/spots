@@ -29,20 +29,28 @@ type Prop = {
 const songContainer = (
   { data, selected, onSelected, onDeselect }: Prop
 ) => {
-  console.log(data);
-
+  // console.log(data);
+  // console.log(selected);
   return (
     <div className='song-container'>
-      <img src={`${data.album.images[0].url}`} alt='Album Images' />
+      <img
+        src={`${data.album.images[0].url}`}
+        alt='Album Images'
+        data-testid='album-images'
+      />
       <div className='detail'>
         <h2>{`${data.name.substring(0, 30)} ${
           data.name.length > 30 ? '...' : ''
         }`}</h2>
         <p>{`${data.artists[0].name} - ${data.album.name}`}</p>
         {selected.some((select) => select.id === data.id) ? (
-          <button onClick={() => onDeselect(data)}>Deselect</button>
+          <button data-testid='album-button' onClick={() => onDeselect(data)}>
+            Deselect
+          </button>
         ) : (
-          <button onClick={() => onSelected(data)}>Select</button>
+          <button data-testid='album-button' onClick={() => onSelected(data)}>
+            Select
+          </button>
         )}
       </div>
     </div>

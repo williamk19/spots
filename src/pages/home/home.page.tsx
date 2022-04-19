@@ -61,6 +61,19 @@ type Prop = {
   handleCreatePlaylist: () => void;
 };
 
+export const callApi = async (event: any, token : string, query : string) => {
+  event.preventDefault();
+  return await fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => console.error(err));
+};
+
 const HomePage = ({
   token,
   authUrl,
@@ -75,19 +88,8 @@ const HomePage = ({
   handleDesc,
   handleCreatePlaylist,
 }: Prop) => {
-  const callApi = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    return fetch(`https://api.spotify.com/v1/search?q=${query}&type=track`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  };
-
   const selectedItem = selected?.filter((select) => select.name === query);
+  console.log(data);
 
   return (
     <div className='container'>
@@ -115,6 +117,7 @@ const HomePage = ({
                         type='search'
                         label='Search Song'
                         variant='filled'
+                        data-testid='search-box'
                         onChange={onSearchChange}
                       />
                       <Button
@@ -124,8 +127,11 @@ const HomePage = ({
                         }}
                         color='success'
                         variant='contained'
+                        data-testid='search-button'
                         endIcon={<SearchIcon />}
-                        onClick={callApi}
+                        onClick={async (e) => {
+                          setData(await callApi(e, token, query));
+                        }}
                       >
                         Search
                       </Button>
@@ -155,6 +161,7 @@ const HomePage = ({
                               selected={selected}
                               onSelected={onSelected}
                               onDeselect={onDeselect}
+                              data-testid='search-data'
                             />
                           </Grid>
                         ))}
@@ -190,4 +197,5 @@ const HomePage = ({
 const mapStateToProps = (state: any) => ({
   token: state.token,
 });
+
 export default connect(mapStateToProps)(HomePage);
