@@ -1,14 +1,15 @@
 .song-container {
-  border: 3px solid #000;
-  width: 90%;
+  border: 1px solid #000;
+  width: 95%;
   padding: 20px;
-  height: 15rem;
+  height: 17rem;
   margin: auto;
   background-color: #f0fffa;
   margin-top: 3rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  box-shadow: 3px 2px 8px 0px rgba(0,0,0,0.51);
 }
 
 .detail {
@@ -44,10 +45,10 @@
 
 @media (max-width: 768px) {
   .song-container {
-    width: 90%;
+    width: 100%;
   }
 
   .song-container > img {
-    height: 100px;
+    height: 80px;
   }
 }

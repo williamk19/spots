@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { setToken } from './redux/action';
 import PropTypes from "prop-types";
 import "./App.css";
-const isPublish = false;
+const isPublish = true;
 
-const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${process.env.REACT_APP_SPOTIFY_API_KEY}&scope=playlist-modify-private&redirect_uri=${isPublish ? "https://spots-xi.vercel.app/" : "http://localhost:3000/"}`;
+const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${process.env.REACT_APP_SPOTIFY_API_KEY}&scope=playlist-modify-private&redirect_uri=${isPublish ? "https://spots-william-nod.vercel.app/" : "http://localhost:3000/"}`;
 const searchUrl = `https://api.spotify.com/v1/search?type=album&include_external=audio`;
 
 const App = ({token, getToken}) => {

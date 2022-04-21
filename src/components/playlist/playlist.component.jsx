@@ -16,11 +16,12 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
           }}
           fullwidth
           onChange={minLength}
-          id='filled-basic'
+          id='playlist-name'
+          className='input'
           label='Song Title'
           variant='filled'
         />
-        {/* <input onChange={minLength} type='text' name='temp' id='title' /> */}
+
         <h4 htmlFor='desc'>Song Description</h4>
         <TextField
           sx={{
@@ -28,14 +29,16 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
             borderRadius: '5px',
           }}
           onChange={handleDesc}
-          id='filled-basic'
+          id='playlist-desc'
+          className='input'
           label='Song Description'
           variant='filled'
         />
-        {/* <input onChange={handleDesc} type='text' name='desc' id='desc' /> */}
+        
         <Button
           sx={{
             marginTop: '2rem',
+            padding: '1rem 0',
             backgroundColor: '#768eb5',
             '&:hover': {
               backgroundColor: '#72829c',
@@ -46,22 +49,13 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
           onClick={(e) => {
             e.preventDefault();
             handleCreatePlaylist(e);
-            document.getElementById('title').value = '';
-            document.getElementById('desc').value = '';
+            alert(`${document.getElementById('playlist-name').value} is created on your spotify account`);
+            document.getElementById('playlist-name').value = '';
+            document.getElementById('playlist-desc').value = '';
           }}
         >
           Create Playlist
         </Button>
-        {/* <input
-          type='submit'
-          onClick={(e) => {
-            e.preventDefault();
-            handleCreatePlaylist(e);
-            document.getElementById('title').value = '';
-            document.getElementById('desc').value = '';
-          }}
-          value='Create Playlist'
-        /> */}
       </form>
     </>
   );

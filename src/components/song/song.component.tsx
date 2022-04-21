@@ -3,7 +3,7 @@ import './song.component.css';
 
 type SelectedType = {
   id: number;
-}
+};
 
 type GifType = {
   id: number;
@@ -26,11 +26,7 @@ type Prop = {
   onDeselect: (data: GifType) => void;
 };
 
-const songContainer = (
-  { data, selected, onSelected, onDeselect }: Prop
-) => {
-  // console.log(data);
-  // console.log(selected);
+const songContainer = ({ data, selected, onSelected, onDeselect }: Prop) => {
   return (
     <div className='song-container'>
       <img
@@ -39,10 +35,14 @@ const songContainer = (
         data-testid='album-images'
       />
       <div className='detail'>
-        <h2>{`${data.name.substring(0, 30)} ${
-          data.name.length > 30 ? '...' : ''
+        <h2>{`${data.name.substring(0, 20)} ${
+          data.name.length > 20 ? '...' : ''
         }`}</h2>
-        <p>{`${data.artists[0].name} - ${data.album.name}`}</p>
+        <p>{`${data.artists[0].name.substring(0, 20)} ${
+          data.name.length > 20 ? '...' : ''
+        } - ${data.album.name.substring(0, 20)} ${
+          data.name.length > 20 ? '...' : ''
+        }`}</p>
         {selected.some((select) => select.id === data.id) ? (
           <button data-testid='album-button' onClick={() => onDeselect(data)}>
             Deselect
