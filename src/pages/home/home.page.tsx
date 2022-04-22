@@ -14,7 +14,7 @@ import ProfileComponent from '../../components/profile/profile.component';
 import { Button, Box, Grid } from '@mui/material';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { DataType } from '../../types/types';
+import { DataType, SelectedType } from '../../types/types';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
@@ -30,6 +30,7 @@ type PropType = {
   token: string;
   authUrl: string;
   data: DataType;
+  selected: SelectedType[];
   setData: (data: DataType) => void;
   onSelected: () => void;
   onDeselect: () => void;
@@ -39,6 +40,7 @@ const HomePage = ({
   token,
   authUrl,
   data,
+  selected,
   setData,
   onSelected,
   onDeselect,
@@ -95,6 +97,7 @@ const HomePage = ({
                               <SongComponent
                                 key={d.id}
                                 data={d}
+                                selected={selected}
                                 onSelected={onSelected}
                                 onDeselect={onDeselect}
                                 data-testid='search-data'
@@ -147,6 +150,7 @@ const HomePage = ({
 
 const mapStateToProps = (state: any) => ({
   token: state.token,
+  selected: state.selected
 });
 
 export default connect(mapStateToProps)(HomePage);

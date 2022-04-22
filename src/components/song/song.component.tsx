@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import './song.component.css';
 
 
@@ -38,6 +37,8 @@ type Prop = {
   onDeselect: (data: GifType) => void;
 };
 
+
+
 const songContainer = ({ data, selected, onSelected, onDeselect }: Prop) => {
   return (
     <div className='song-container'>
@@ -57,11 +58,11 @@ const songContainer = ({ data, selected, onSelected, onDeselect }: Prop) => {
         }`}</p>
         <p>{`${duration(data.duration_ms)}`}</p>
         {selected.some((select) => select.id === data.id) ? (
-          <button data-testid='album-button' onClick={() => onDeselect(data)}>
+          <button data-testid='deselect-button' onClick={() => onDeselect(data)}>
             Deselect
           </button>
         ) : (
-          <button data-testid='album-button' onClick={() => onSelected(data)}>
+          <button data-testid='select-button' onClick={() => onSelected(data)}>
             Select
           </button>
         )}
@@ -70,8 +71,8 @@ const songContainer = ({ data, selected, onSelected, onDeselect }: Prop) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  selected: state.selected
-});
+// const mapStateToProps = (state: any) => ({
+//   selected: state.selected
+// });
 
-export default connect(mapStateToProps)(songContainer);
+export default songContainer;

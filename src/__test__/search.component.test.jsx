@@ -1,19 +1,22 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import SearchComponent from '../components/search/search.component';
-import HomePage from '../pages/home/home.page';
+import { waitFor } from '@testing-library/react';
+import { server } from '../__mock_data__/server';
+import { data } from '../__mock_data__/response';
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test('Searching button should trigger API call', async () => {
-  render(<SearchComponent />);
 
-  const searchbox = screen.findByTestId('search-box');
-  const searchBtn = screen.findByTestId('search-button');
-  userEvent.type(searchbox, 'eminem');
-  userEvent.click(searchBtn);
+  const gifData = await fetch(
+    `https://api.spotify.com/v1/search?q=eminem&type=track`
+  )
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => console.error(err));
+
   await waitFor(() => {
-    render(<HomePage />);
-    const songsComponent = screen.findByTestId('search-data');
-    expect(songsComponent).toBeInTheDocument();
+    expect(gifData.items).toHaveLength(data.items.length);
   });
 });

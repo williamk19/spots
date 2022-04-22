@@ -18,7 +18,6 @@ const playlist = ({ token, user, selected }) => {
   };
 
   const handleCreatePlaylist = async (e) => {
-    console.log(user)
     e.preventDefault();
     if (listTitle.length <= 10) {
       alert('Playlist name must be over 10 characters');

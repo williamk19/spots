@@ -41,7 +41,6 @@ const App = ({token, setToken, user, setUser, selected, setSelected}) => {
 		setSelected(selected.filter((select) => select.id !== removeData.id))
 	);
 
-	
 
 	return (
 		<div className="App">

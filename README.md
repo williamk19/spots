@@ -31,8 +31,8 @@ Write this environment variable below.
 REACT_APP_SPOTIFY_API_KEY = {SOME_KEY}
 ```
 
-After finishing setup the API key, go to the App.js and find\
-isPublish variable. If you're running this app in local machine\
+After finishing setup the API key, go to the App.js and logout.component.tsx\
+and find isPublish variable. If you're running this app in local machine\
 you need to set this variable into false.
 ```
 const isPublish = false;
