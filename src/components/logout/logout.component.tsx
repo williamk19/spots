@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 
 const logoutUrl = 'https://www.spotify.com/logout/';
-const isPublish = false;
+const isPublish = true;
 
 const logout = () => {
     const spotifyLogoutWindow = window.open(
