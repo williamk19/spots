@@ -14,7 +14,7 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
             backgroundColor: 'white',
             borderRadius: '5px',
           }}
-          fullwidth
+          fullwidth='true'
           onChange={minLength}
           id='playlist-name'
           className='input'

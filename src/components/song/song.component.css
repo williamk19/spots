@@ -1,6 +1,6 @@
 .song-container {
+  border-radius: 0.75rem;
   border: 1px solid #000;
-  width: 95%;
   padding: 20px;
   height: 17rem;
   margin: auto;
@@ -44,10 +44,6 @@
 }
 
 @media (max-width: 768px) {
-  .song-container {
-    width: 100%;
-  }
-
   .song-container > img {
     height: 80px;
   }

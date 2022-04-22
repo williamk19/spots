@@ -1,6 +1,16 @@
 import React from 'react';
 import './song.component.css';
 
+
+function duration(ms: number) {
+  const minute = Math.floor(ms / 60000);
+  const second = Math.round((ms % 60000) / 1000);
+
+  return second === 60
+    ? `${minute + 1}:00`
+    : `${minute}:${second.toString().padStart(2, '0')}`;
+}
+
 type SelectedType = {
   id: number;
 };
@@ -13,6 +23,7 @@ type GifType = {
     }[];
     name: String;
   };
+  duration_ms: number;
   name: String;
   artists: {
     name: String;
@@ -43,6 +54,7 @@ const songContainer = ({ data, selected, onSelected, onDeselect }: Prop) => {
         } - ${data.album.name.substring(0, 20)} ${
           data.name.length > 20 ? '...' : ''
         }`}</p>
+        <p>{`${duration(data.duration_ms)}`}</p>
         {selected.some((select) => select.id === data.id) ? (
           <button data-testid='album-button' onClick={() => onDeselect(data)}>
             Deselect

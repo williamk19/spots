@@ -10,7 +10,6 @@ const authUrl = `https://accounts.spotify.com/authorize?response_type=token&clie
 const searchUrl = `https://api.spotify.com/v1/search?type=album&include_external=audio`;
 
 const App = ({token, getToken}) => {
-	const [query, setQuery] = useState("");
 	const [data, setData] = useState({});
 	const [selected, setSelected] = useState([]);
 	const [currUserId, setCurrUserId] = useState('')
@@ -43,10 +42,6 @@ const App = ({token, getToken}) => {
 
 	const onDeselect = (removeData) => (
 		setSelected(selected.filter((select) => select.id !== removeData.id))
-	);
-
-	const onSearchChange = (e) => (
-		setQuery(e.target.value)
 	);
 
 	const minLength = (e) => {
@@ -99,8 +94,6 @@ const App = ({token, getToken}) => {
 				selected={selected}
 				data={data}
 				setData={setData}
-				query={query}
-				onSearchChange={onSearchChange}
 				onSelected={onSelected}
 				onDeselect={onDeselect}
 				minLength={minLength}
