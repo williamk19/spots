@@ -1,10 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './playlist.component.css';
-
+import { connect } from 'react-redux';
 import { TextField, Button } from '@mui/material';
 
-const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
-	return (
+const playlist = ({ token, user, selected }) => {
+  const [listTitle, setListTitle] = useState('');
+  const [listDesc, setListDesc] = useState('');
+
+  const minLength = (e) => {
+    const { value } = e.target;
+    return setListTitle(value);
+  };
+
+  const handleDesc = (e) => {
+    const { value } = e.target;
+    return setListDesc(value);
+  };
+
+  const handleCreatePlaylist = async (e) => {
+    console.log(user)
+    e.preventDefault();
+    if (listTitle.length <= 10) {
+      alert('Playlist name must be over 10 characters');
+    } else {
+      let playlistId = await fetch(
+        `https://api.spotify.com/v1/users/${user.id}/playlists`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            name: `${listTitle}`,
+            description: `${listDesc}`,
+            public: false,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data.id);
+      const uris = selected.map((select) => select.uri).join(',');
+      alert(`${listTitle} is created on your spotify account`);
+      return fetch(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${uris}`,
+        {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        }
+      );
+    }
+  };
+
+  return (
     <>
       <h1>Create Playlist</h1>
       <form>
@@ -14,7 +66,6 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
             backgroundColor: 'white',
             borderRadius: '5px',
           }}
-          fullwidth='true'
           onChange={minLength}
           id='playlist-name'
           className='input'
@@ -34,7 +85,7 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
           label='Song Description'
           variant='filled'
         />
-        
+
         <Button
           sx={{
             marginTop: '2rem',
@@ -49,7 +100,6 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
           onClick={(e) => {
             e.preventDefault();
             handleCreatePlaylist(e);
-            alert(`${document.getElementById('playlist-name').value} is created on your spotify account`);
             document.getElementById('playlist-name').value = '';
             document.getElementById('playlist-desc').value = '';
           }}
@@ -59,6 +109,12 @@ const playlist = ({minLength, handleDesc, handleCreatePlaylist}) => {
       </form>
     </>
   );
-}
+};
 
-export default playlist;
+const mapStateToProps = (state) => ({
+  token: state.token,
+  user: state.user,
+  selected: state.selected
+});
+
+export default connect(mapStateToProps)(playlist);

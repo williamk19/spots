@@ -9,6 +9,11 @@ There are some main features of **Spots App**
   button is clicked.
 - List of song can be selected and deselected so the users can create \
   a playlist from their selected song.
+
+And i add some additional features to this app.
+- After login users can see their profile picture and spotify display name
+- Users can logout from their account by clicking the button below display name
+- Add MSW for mock API async call
   
 ## Here's steps to run this application locally on your machine
 First, you need to install all the package needed to\

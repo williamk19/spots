@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './song.component.css';
 
 
@@ -69,4 +70,8 @@ const songContainer = ({ data, selected, onSelected, onDeselect }: Prop) => {
   );
 };
 
-export default songContainer;
+const mapStateToProps = (state: any) => ({
+  selected: state.selected
+});
+
+export default connect(mapStateToProps)(songContainer);

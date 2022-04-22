@@ -29,7 +29,7 @@
 }
 
 .song-container > img {
-  height: 150px;
+  height: 100px;
   margin-right: 2rem;
 }
 
@@ -45,6 +45,6 @@
 
 @media (max-width: 768px) {
   .song-container > img {
-    height: 80px;
+    height: 75px;
   }
 }

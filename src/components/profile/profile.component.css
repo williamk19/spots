@@ -1,0 +1,16 @@
+.profile-container {
+    padding: 1rem 1rem;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem;
+    text-align: left;
+}
+
+.text-wrapper h2 {
+    margin-top: 0.5rem;
+    color: rgb(240, 255, 250);
+	text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+}

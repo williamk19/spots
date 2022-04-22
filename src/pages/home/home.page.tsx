@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,17 +10,16 @@ import './home.page.css';
 import SongComponent from '../../components/song/song.component';
 import PlaylistComponent from '../../components/playlist/playlist.component';
 import SearchComponent from '../../components/search/search.component';
+import ProfileComponent from '../../components/profile/profile.component';
 import { Button, Box, Grid } from '@mui/material';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import {
-  createTheme,
-  ThemeProvider,
-} from '@mui/material/styles';
-import { DataType, SelectedType } from '../../types/types';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { DataType } from '../../types/types';
 
 const { palette } = createTheme();
 const { augmentColor } = palette;
-const createColor = (mainColor: any) => augmentColor({ color: { main: mainColor } });
+const createColor = (mainColor: any) =>
+  augmentColor({ color: { main: mainColor } });
 const theme = createTheme({
   palette: {
     primary: createColor('#009688'),
@@ -30,15 +29,10 @@ const theme = createTheme({
 type PropType = {
   token: string;
   authUrl: string;
-  searchUrl: string;
-  selected: SelectedType[];
   data: DataType;
   setData: (data: DataType) => void;
   onSelected: () => void;
   onDeselect: () => void;
-  minLength: () => void;
-  handleDesc: () => void;
-  handleCreatePlaylist: () => void;
 };
 
 const HomePage = ({
@@ -46,15 +40,10 @@ const HomePage = ({
   authUrl,
   data,
   setData,
-  selected,
   onSelected,
   onDeselect,
-  minLength,
-  handleDesc,
-  handleCreatePlaylist,
 }: PropType) => {
   const [query, setQuery] = useState('');
-  const selectedItem = selected?.filter((select) => select.name === query);
 
   return (
     <div className='container'>
@@ -76,11 +65,8 @@ const HomePage = ({
                   >
                     <Grid container>
                       <Grid item xs={12} md={4}>
-                        <PlaylistComponent
-                          minLength={minLength}
-                          handleDesc={handleDesc}
-                          handleCreatePlaylist={handleCreatePlaylist}
-                        />
+                        <ProfileComponent />
+                        <PlaylistComponent />
                         <SearchComponent
                           query={query}
                           setQuery={setQuery}
@@ -99,25 +85,16 @@ const HomePage = ({
                               height: '100%',
                               overflow: 'visible',
                             },
+                            '@media screen and (max-width: 500px)': {
+                              padding: 4,
+                            },
                           }}
                         >
-                          {selectedItem?.map((d) => (
-                            <Grid item key={d.id} xs={12} md={9} lg={5}>
-                              <SongComponent
-                                key={d.id}
-                                data={d}
-                                selected={selected}
-                                onSelected={onSelected}
-                                onDeselect={onDeselect}
-                              />
-                            </Grid>
-                          ))}
                           {data?.tracks?.items?.map((d) => (
                             <Grid item key={d.id} xs={12} md={9} lg={5}>
                               <SongComponent
                                 key={d.id}
                                 data={d}
-                                selected={selected}
                                 onSelected={onSelected}
                                 onDeselect={onDeselect}
                                 data-testid='search-data'

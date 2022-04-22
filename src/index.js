@@ -6,8 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import { setToken } from './redux/reducer';
-const store = createStore(setToken);
+import { reducer } from './redux/reducer';
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>

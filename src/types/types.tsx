@@ -19,15 +19,22 @@ export type DataType = {
 
 export type SelectedType = {
   id: number;
-  name: String;
+  name: string;
   album: {
     images: {
-      url: String;
+      url: string;
     }[];
-    name: String;
+    name: string;
   };
   duration_ms: number;
   artists: {
-    name: String;
+    name: string;
   }[];
 };
+
+export type CurrentUser = {
+  display_name: string;
+  images:{
+    url: string;
+  }[];
+}
